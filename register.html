@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register - E-commerce</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+        }
+        .container {
+            width: 350px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+        input, textarea {
+            width: 95%;
+            padding: 10px;
+            margin: 8px 0;
+        }
+        button {
+            padding: 10px;
+            width: 100%;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Register</h2>
+
+    <form method="post" action="register.php"  novalidate>
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="date" name = "dob" required>
+        <textarea placeholder="Address" name="address" required></textarea>
+        <input type="tel" placeholder="Phone Number" name="phno" required>
+        <input type="email" placeholder="Email" name="email" required>
+        <input type="password" placeholder="Password" name = "password" required>
+
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+</body>
+</html>
