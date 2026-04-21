@@ -1,31 +1,50 @@
 <?php
+session_start();
+require "db.php";
+//var_dump($_POST);
+if($_SERVER["REQUEST_METHOD"] == "POST")
+    {
 $Username = $_POST['username'];
 $Password = $_POST['password'];
 
-//database connection
-$conn = new mysqli('localhost','root','','ecommers');
-if($conn->connect_error){
-    die('connection failed : '.$conn->connect_error);
-}
-else{
+
+
     if(!empty($Username) && !empty($Password)){
     // Perform login logic here (e.g., check credentials against a database)
     // For demonstration purposes, we'll just display a success message
     
 
-    $stmt = $conn->prepare("INSERT INTO login(username, password) VALUES(?,?)");
-    $stmt->bind_param("ss", $Username, $Password);
+    $stmt = $conn->prepare("select id,password from register where name=?");
+    $stmt->bind_param("s", $Username);
     $stmt->execute();
-    header("Location: select.html");
-    exit();
-    $stmt->close();
-    $conn->close();
-}
+    $result = $stmt->get_result();
 
- else {
-    echo "Please enter both username and password.";
+    if($result->num_rows === 1)
+        {
+            $user = $result->fetch_assoc();
+            //verify password
+            /*echo "<pre>";
+            var_dump($Username);
+             echo "</pre>";
+             die(); */
+            if(password_verify($Password,$user['password']))
+                {
+                    $_SESSION['user_id'] = $user['id'];
+                     header("Location: select.html");
+                     exit();
+                    }
+                    else{
+                        echo "Invalid password";
+                    }
+        }
+        else{
+            echo "User not found";
+        }
 }
+else{
+    echo "Please enter username and password";
 }
+    }
 
 
 ?>
